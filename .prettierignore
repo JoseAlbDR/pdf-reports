@@ -1,0 +1,5 @@
+postgres/
+pgadmin/
+pgadmin/storage/
+pgadmin/storage/superman_google.com
+node_modules/
