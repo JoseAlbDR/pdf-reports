@@ -2,7 +2,7 @@ import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { SWAGGER_CONFIG } from './swagger.config';
 import { ConfigService } from '@nestjs/config';
-import * as basicAuth from 'express-basic-auth';
+import basicAuth from 'express-basic-auth';
 
 export function createDoucment(app: INestApplication) {
   const builder = new DocumentBuilder()
