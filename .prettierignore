@@ -1,5 +1,7 @@
-postgres/
-pgadmin/
-pgadmin/storage/
+postgres/**
+postgres/sessions
+pgadmin/**
+pgadmin/storage/**
 pgadmin/storage/superman_google.com
-node_modules/
+node_modules/**
+dist/**
