@@ -8,16 +8,16 @@
 npm ci
 ```
 
-2. Run postgres and pgAdmin locally
-
-```bash
-docker-compose up -d
-```
-
-3. Copy .env.template to .env and edit it to your liking
+2. Copy .env.template to .env and edit it to your liking
 
 ```bash
 cp .env.template .env
+```
+
+3. Run postgres and pgAdmin locally
+
+```bash
+docker-compose up -d
 ```
 
 4. Run TypeORM migrations
