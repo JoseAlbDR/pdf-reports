@@ -20,7 +20,7 @@ export class BasicReportsController {
 
     return new StreamableFile(pdfDoc, {
       type: 'application/pdf',
-      disposition: 'attachment; filename=test.pdf',
+      disposition: 'inline; filename=test.pdf',
     });
   }
 }

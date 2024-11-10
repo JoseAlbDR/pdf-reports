@@ -40,6 +40,7 @@ export class BasicReportsService {
       content: ['Hello there'],
     };
     const doc = printer.createPdfKitDocument(docDefinition);
+    doc.info.Title = 'Test';
     const passThrough = new PassThrough();
 
     const pdfStream = doc.pipe(passThrough);
