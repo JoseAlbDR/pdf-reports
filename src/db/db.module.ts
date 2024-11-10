@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppConfigModule } from 'src/lib/config/config.module';
 import { AppConfigService } from 'src/lib/config/config.service';
+import { Employee } from 'src/repositories/employees/entities/employee.entity';
 
 @Module({
   imports: [
@@ -16,8 +17,9 @@ import { AppConfigService } from 'src/lib/config/config.service';
         password: config.root.dbPasswrod || 'postgres',
         database: config.root.dbName || 'postgres',
         port: config.root.dbPort || 5432,
-        autoLoadEntities: true,
-        synchronize: true,
+        // autoLoadEntities: true,
+        entities: [Employee],
+        synchronize: false,
         ssl: false,
       }),
       inject: [AppConfigService],
