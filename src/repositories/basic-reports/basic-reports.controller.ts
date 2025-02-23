@@ -1,8 +1,8 @@
-import { Controller, Get, Query, StreamableFile } from '@nestjs/common';
+import { Controller, Get, Param, Query, StreamableFile } from '@nestjs/common';
 import { BasicReportsService } from './basic-reports.service';
 import { ApiOkResponse, ApiOperation } from '@nestjs/swagger';
 import { Employee } from '../employees/entities/employee.entity';
-import { PdfTestQueryParams } from './basic-reports.dto';
+import { EmployeeIdParam, PdfTestQueryParams } from './basic-reports.dto';
 
 @Controller('basic-reports')
 export class BasicReportsController {
@@ -20,6 +20,16 @@ export class BasicReportsController {
   @Get('employees')
   testEmployee() {
     return this.basicReportsService.getEmployees();
+  }
+
+  @ApiOperation({
+    summary: 'Get employee by id',
+    description: 'Get employee by id',
+  })
+  @ApiOkResponse({ description: 'Get employee by id', type: Employee })
+  @Get('employees/:id')
+  getEmployeeById(@Param() param: EmployeeIdParam) {
+    return this.basicReportsService.getEmployeeById(param);
   }
 
   @ApiOperation({
@@ -41,9 +51,9 @@ export class BasicReportsController {
     summary: 'Employment letter',
     description: 'Generate an employment letter',
   })
-  @Get('employment-letter')
-  async employmentLetter() {
-    const pdfDoc = await this.basicReportsService.createEmploymentLetter();
+  @Get('employment-letter/:id')
+  async employmentLetter(@Param() param: EmployeeIdParam) {
+    const pdfDoc = await this.basicReportsService.createEmploymentLetter(param);
 
     return new StreamableFile(pdfDoc, {
       type: 'application/pdf',

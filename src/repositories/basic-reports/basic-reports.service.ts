@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import { PassThrough } from 'stream';
 import { PrinterService } from 'src/repositories/printer/printer.service';
 import { getEmploymentLetter, getHelloWorldReport } from 'src/lib/reports';
-import { PdfTestQueryParams } from './basic-reports.dto';
+import { EmployeeIdParam, PdfTestQueryParams } from './basic-reports.dto';
 
 @Injectable()
 export class BasicReportsService {
@@ -23,6 +23,10 @@ export class BasicReportsService {
     const employees = await this.employeeRepository.find({});
 
     return employees;
+  }
+
+  async getEmployeeById(param: EmployeeIdParam) {
+    return this.employeeRepository.findOne({ where: { id: param.id } });
   }
 
   private createPdfStream(doc: PDFKit.PDFDocument) {
@@ -43,8 +47,9 @@ export class BasicReportsService {
     return pdfStream;
   }
 
-  async createEmploymentLetter() {
-    const docDefinition = getEmploymentLetter();
+  async createEmploymentLetter(param: EmployeeIdParam) {
+    const employee = await this.getEmployeeById(param);
+    const docDefinition = getEmploymentLetter(employee);
     const doc = this.printerService.createPdfKitDocument(docDefinition);
     doc.info.Title = 'Employment Letter';
 

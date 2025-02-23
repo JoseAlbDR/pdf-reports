@@ -10,3 +10,13 @@ export class PdfTestQueryParams {
   @IsString()
   name: string;
 }
+
+export class EmployeeIdParam {
+  @ApiProperty({
+    required: true,
+    example: 1,
+    default: 1,
+  })
+  @IsString()
+  id: number;
+}
