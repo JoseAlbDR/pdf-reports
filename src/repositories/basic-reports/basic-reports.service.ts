@@ -4,7 +4,8 @@ import { Employee } from '../employees/entities/employee.entity';
 import { Repository } from 'typeorm';
 import { PassThrough } from 'stream';
 import { PrinterService } from 'src/repositories/printer/printer.service';
-import { getHelloWorldReport } from 'src/lib/reports';
+import { getEmploymentLetter, getHelloWorldReport } from 'src/lib/reports';
+import { PdfTestQueryParams } from './basic-reports.dto';
 
 @Injectable()
 export class BasicReportsService {
@@ -24,15 +25,30 @@ export class BasicReportsService {
     return employees;
   }
 
-  async pdfTest(name: string) {
-    const docDefinition = getHelloWorldReport({ name });
-    const doc = this.printerService.createPdfKitDocument(docDefinition);
-    doc.info.Title = 'Test';
+  private createPdfStream(doc: PDFKit.PDFDocument) {
     const passThrough = new PassThrough();
-
     const pdfStream = doc.pipe(passThrough);
     doc.end();
 
+    return pdfStream;
+  }
+
+  async pdfTest(params: PdfTestQueryParams) {
+    const { name } = params;
+    const docDefinition = getHelloWorldReport({ name });
+    const doc = this.printerService.createPdfKitDocument(docDefinition);
+    doc.info.Title = 'Test';
+
+    const pdfStream = this.createPdfStream(doc);
+    return pdfStream;
+  }
+
+  async createEmploymentLetter() {
+    const docDefinition = getEmploymentLetter();
+    const doc = this.printerService.createPdfKitDocument(docDefinition);
+    doc.info.Title = 'Employment Letter';
+
+    const pdfStream = this.createPdfStream(doc);
     return pdfStream;
   }
 }

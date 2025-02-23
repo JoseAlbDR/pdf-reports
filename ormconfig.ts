@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 require('dotenv').config();
 require('module-alias/register');
 const { DataSource } = require('typeorm');
