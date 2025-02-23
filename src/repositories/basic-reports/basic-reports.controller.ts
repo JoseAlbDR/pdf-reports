@@ -1,4 +1,4 @@
-import { Controller, Get, StreamableFile } from '@nestjs/common';
+import { Controller, Get, Query, StreamableFile } from '@nestjs/common';
 import { BasicReportsService } from './basic-reports.service';
 
 @Controller('basic-reports')
@@ -15,8 +15,8 @@ export class BasicReportsController {
   }
 
   @Get('pdf-test')
-  async pdfTest() {
-    const pdfDoc = await this.basicReportsService.pdfTest();
+  async pdfTest(@Query('name') name: string) {
+    const pdfDoc = await this.basicReportsService.pdfTest(name);
 
     return new StreamableFile(pdfDoc, {
       type: 'application/pdf',
